@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A33E64B718D2C39200D0C9A7 /* PTCard.m in Sources */ = {isa = PBXBuildFile; fileRef = A33E64B618D2C39200D0C9A7 /* PTCard.m */; };
 		A38FAE4018D0A31700900C78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38FAE3F18D0A31700900C78 /* UIKit.framework */; };
 		A38FAE4218D0A31700900C78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38FAE4118D0A31700900C78 /* Foundation.framework */; };
 		A38FAE4418D0A31700900C78 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38FAE4318D0A31700900C78 /* CoreGraphics.framework */; };
@@ -23,9 +24,14 @@
 		A38FAE6318D0A31700900C78 /* PTInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A38FAE6218D0A31700900C78 /* PTInfoViewController.m */; };
 		A38FAE6518D0A31700900C78 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = A38FAE6418D0A31700900C78 /* second.png */; };
 		A38FAE6718D0A31700900C78 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A38FAE6618D0A31700900C78 /* second@2x.png */; };
+		A3ADCBA118D1CAE100E7BCFE /* PTGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */; };
+		A3ADCBA518D1DCFD00E7BCFE /* PTGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A33E64B518D2C39200D0C9A7 /* PTCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTCard.h; sourceTree = "<group>"; };
+		A33E64B618D2C39200D0C9A7 /* PTCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTCard.m; sourceTree = "<group>"; };
+		A352661418D702BF00137ACC /* globalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalDefine.h; sourceTree = "<group>"; };
 		A38FAE3C18D0A31700900C78 /* powerby2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = powerby2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38FAE3F18D0A31700900C78 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A38FAE4118D0A31700900C78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -48,6 +54,10 @@
 		A38FAE6218D0A31700900C78 /* PTInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTInfoViewController.m; sourceTree = "<group>"; };
 		A38FAE6418D0A31700900C78 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		A38FAE6618D0A31700900C78 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		A3ADCB9F18D1CAE100E7BCFE /* PTGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGrid.h; sourceTree = "<group>"; };
+		A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGrid.m; sourceTree = "<group>"; };
+		A3ADCBA318D1DCFD00E7BCFE /* PTGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGridView.h; sourceTree = "<group>"; };
+		A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGridView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,18 +104,22 @@
 		A38FAE4518D0A31700900C78 /* powerby2 */ = {
 			isa = PBXGroup;
 			children = (
+				A38FAE4618D0A31700900C78 /* Supporting Files */,
+				A3ADCBA218D1CAFA00E7BCFE /* resource */,
 				A38FAE4E18D0A31700900C78 /* PTAppDelegate.h */,
 				A38FAE4F18D0A31700900C78 /* PTAppDelegate.m */,
 				A38FAE5718D0A31700900C78 /* MainStoryboard.storyboard */,
 				A38FAE5A18D0A31700900C78 /* PTGameViewController.h */,
 				A38FAE5B18D0A31700900C78 /* PTGameViewController.m */,
-				A38FAE5D18D0A31700900C78 /* first.png */,
-				A38FAE5F18D0A31700900C78 /* first@2x.png */,
+				A3ADCB9F18D1CAE100E7BCFE /* PTGrid.h */,
+				A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */,
 				A38FAE6118D0A31700900C78 /* PTInfoViewController.h */,
 				A38FAE6218D0A31700900C78 /* PTInfoViewController.m */,
-				A38FAE6418D0A31700900C78 /* second.png */,
-				A38FAE6618D0A31700900C78 /* second@2x.png */,
-				A38FAE4618D0A31700900C78 /* Supporting Files */,
+				A3ADCBA318D1DCFD00E7BCFE /* PTGridView.h */,
+				A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */,
+				A33E64B518D2C39200D0C9A7 /* PTCard.h */,
+				A33E64B618D2C39200D0C9A7 /* PTCard.m */,
+				A352661418D702BF00137ACC /* globalDefine.h */,
 			);
 			path = powerby2;
 			sourceTree = "<group>";
@@ -122,6 +136,17 @@
 				A38FAE5518D0A31700900C78 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A3ADCBA218D1CAFA00E7BCFE /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				A38FAE5D18D0A31700900C78 /* first.png */,
+				A38FAE5F18D0A31700900C78 /* first@2x.png */,
+				A38FAE6418D0A31700900C78 /* second.png */,
+				A38FAE6618D0A31700900C78 /* second@2x.png */,
+			);
+			name = resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +224,9 @@
 				A38FAE5018D0A31700900C78 /* PTAppDelegate.m in Sources */,
 				A38FAE5C18D0A31700900C78 /* PTGameViewController.m in Sources */,
 				A38FAE6318D0A31700900C78 /* PTInfoViewController.m in Sources */,
+				A3ADCBA118D1CAE100E7BCFE /* PTGrid.m in Sources */,
+				A3ADCBA518D1DCFD00E7BCFE /* PTGridView.m in Sources */,
+				A33E64B718D2C39200D0C9A7 /* PTCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
