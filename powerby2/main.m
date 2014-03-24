@@ -2,10 +2,13 @@
 //  main.m
 //  powerby2
 //
-//  Created by kwan terry on 14-3-12.
+//  Created by spacewander on 14-3-12.
 //  Copyright (c) 2014年 com.scutknight. All rights reserved.
 //
-
+/**
+ *	@file
+ *  the entry of app
+ */
 #import <UIKit/UIKit.h>
 
 #import "PTAppDelegate.h"

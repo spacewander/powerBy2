@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTCard.h"
+#import "PTGrid.h"
 
 @interface PTGridView : UIView
 
 @property (strong, nonatomic) NSMutableArray *cards;
+
+- (void) updateGridWithGridNumber:(PTGrid *)grid;
 
 @end

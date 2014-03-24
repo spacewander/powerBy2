@@ -10,8 +10,9 @@
 
 @interface PTGrid : NSObject
 
-@property (strong) NSArray* grid;
+@property (strong) NSMutableArray* values;
 
-- (id) initWithGrid:(NSArray *)gridArray;
+- (id) initWithGrid:(NSMutableArray *)gridArray;
+- (void) setRandomValue;
 
 @end

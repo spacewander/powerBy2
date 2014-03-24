@@ -23,15 +23,17 @@
 #define LAYOUT_COLOR_BLUE 0.32
 #define LAYOUT_COLOR_ALPHA 1.0
 
-#define GRID_NUMBER 5
+#define CARDS_NUMBER 25
+#define CARDS_PER_LINE 5
 #define GRIDS 0,0,0,0,0,\
               0,0,0,0,0,\
               0,0,0,0,0,\
               0,0,0,0,0,\
               0,0,0,0,0
-#define GRID_X 40
-#define GRID_Y 50
-#define GRID_WIDTH 240
-#define GRID_HEIGHT 240
+
+#define GRID_X 20
+#define GRID_Y 70
+#define GRID_WIDTH 280
+#define GRID_HEIGHT 280
 
 #endif

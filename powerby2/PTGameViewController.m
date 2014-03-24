@@ -27,8 +27,6 @@
 @property (strong, nonatomic) UILabel *scoreLabel;
 @property (strong, nonatomic) UILabel *highestScoreLabel;
 
-@property (strong) NSArray *grid;
-
 @property (strong, nonatomic) PTGrid *gridModel;
 @property (strong, nonatomic) PTGridView *gridView;
 
@@ -57,13 +55,16 @@
     
     self.gridView = [[PTGridView alloc] initWithFrame:
                      CGRectMake(GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT)];
+    if (self.gridView == nil) {
+        NSLog(@"ERROR : can not init the view of grid!");
+        exit(1);
+    }
     [self.view addSubview:self.gridView];
+    self.gridModel = [self.gridModel initWithGrid:[NSArray arrayWithObjects:
+                                                   GRIDS,
+                                                   nil]];
     
-    self.grid = [NSArray arrayWithObjects:
-                 GRIDS,
-                 nil];
-    self.gridModel = [self.gridModel initWithGrid:self.grid];
-    
+    [self startGame];
 }
 
 - (void) loadView
@@ -90,9 +91,18 @@
 {
     label.textAlignment = NSTextAlignmentCenter;
     label.adjustsFontSizeToFitWidth = YES;
+    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
     label.textColor = [UIColor colorWithRed:BACKGROUND_COLOR_RED green:BACKGROUND_COLOR_GREEN
                                                  blue:BACKGROUND_COLOR_BLUE alpha:BACKGROUND_COLOR_ALPHA ];
+
+    // the background color of labels is the same as the grid
     [self setDefaultLayoutColor:label];
+}
+
+- (void) startGame
+{
+    [self.gridModel setRandomValue];
+    [self.gridView updateGridWithGridNumber:self.gridModel];
 }
 
 - (void)didReceiveMemoryWarning

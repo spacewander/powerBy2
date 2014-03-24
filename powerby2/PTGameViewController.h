@@ -13,4 +13,6 @@
  */
 @interface PTGameViewController : UIViewController
 
+- (void) startGame;
+
 @end

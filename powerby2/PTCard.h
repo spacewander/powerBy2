@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *	each PTCard represents a card in the gird
+ */
 @interface PTCard : UILabel
+
+@property (strong, nonatomic) NSNumber *cardValue;
+
+- (void) updateWithValue;
+- (void) setDefaultStyle;
 
 @end

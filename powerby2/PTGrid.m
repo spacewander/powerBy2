@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        self.grid = [NSArray arrayWithObjects:
+        self.values = [NSArray arrayWithObjects:
                      GRIDS,
                      nil];
     }
@@ -26,10 +26,33 @@
 {
     self = [super init];
     if (self) {
-        self.grid = [NSArray arrayWithArray:gridArray];
-        NSLog(@"%@",self.grid[0]);
+        self.values = [NSArray arrayWithArray:gridArray];
+        NSLog(@"%@",self.values[0]);
     }
     return self;
+}
+
+- (void) setRandomValue
+{
+    srandom(time(NULL));
+    int selectFirstGrid = rand() % CARDS_NUMBER;
+    int selectSecondGrid = rand() % CARDS_NUMBER;
+    while (selectFirstGrid == selectSecondGrid) {
+        selectSecondGrid = rand() % CARDS_NUMBER;
+    }
+    
+    // there will be two in each two time in three, and will be four one third
+    int firstValue = 2;
+    int secondValue = 2;
+    if (rand() % 3 == 0) {
+        firstValue = 4;
+    }
+    if (rand() % 3 == 0) {
+        secondValue = 4;
+    }
+    
+    [self.values setObject:[NSNumber numberWithInt:firstValue] atIndexedSubscript:(NSUInteger)selectFirstGrid];
+    [self.values setObject:[NSNumber numberWithInt:secondValue] atIndexedSubscript:(NSUInteger)selectSecondGrid];
 }
 
 @end
