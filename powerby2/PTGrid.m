@@ -15,9 +15,10 @@
 {
     self = [super init];
     if (self) {
-        self.values = [NSArray arrayWithObjects:
-                     GRIDS,
-                     nil];
+        self.values = [NSMutableArray arrayWithCapacity:CARDS_NUMBER];
+        for (int i = 0; i < CARDS_NUMBER; ++i) {
+            [self.values addObject:[NSNumber numberWithInt:0]];
+        }
     }
     return self;
 }
@@ -27,32 +28,35 @@
     self = [super init];
     if (self) {
         self.values = [NSArray arrayWithArray:gridArray];
-        NSLog(@"%@",self.values[0]);
+        NSLog(@"%@",[self.values[0] description]);
     }
     return self;
 }
 
+/**
+ *	select two cards with initial value(2 or 4)
+ */
 - (void) setRandomValue
 {
-    srandom(time(NULL));
-    int selectFirstGrid = rand() % CARDS_NUMBER;
-    int selectSecondGrid = rand() % CARDS_NUMBER;
-    while (selectFirstGrid == selectSecondGrid) {
-        selectSecondGrid = rand() % CARDS_NUMBER;
+    srandom((unsigned)time(0));
+    int selectFirstCard = random() % CARDS_NUMBER;
+    int selectSecondCard = random() % CARDS_NUMBER;
+    while (selectFirstCard == selectSecondCard) {
+        selectSecondCard = random() % CARDS_NUMBER;
     }
     
     // there will be two in each two time in three, and will be four one third
     int firstValue = 2;
     int secondValue = 2;
-    if (rand() % 3 == 0) {
+    if (random() % 3 == 0) {
         firstValue = 4;
     }
-    if (rand() % 3 == 0) {
+    if (random() % 3 == 0) {
         secondValue = 4;
     }
     
-    [self.values setObject:[NSNumber numberWithInt:firstValue] atIndexedSubscript:(NSUInteger)selectFirstGrid];
-    [self.values setObject:[NSNumber numberWithInt:secondValue] atIndexedSubscript:(NSUInteger)selectSecondGrid];
+    [self.values setObject:[NSNumber numberWithInt:firstValue] atIndexedSubscript:(NSUInteger)selectFirstCard];
+    [self.values setObject:[NSNumber numberWithInt:secondValue] atIndexedSubscript:(NSUInteger)selectSecondCard];
 }
 
 @end

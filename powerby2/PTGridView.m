@@ -40,16 +40,27 @@
     return self;
 }
 
+/**
+ *	@return	the total number of card
+ */
 - (int) cardsNumber
 {
     return CARDS_NUMBER;
 }
 
+/**
+ *	@return	card number for each line
+ */
 - (int) cardsNumberPerLine
 {
     return CARDS_PER_LINE;
 }
 
+/**
+ *	fill the grid with cards. Called when the grid is initialed.
+ *
+ *	@param	gridSize	the size of grid
+ */
 - (void) fillWithCards:(CGRect)gridSize
 {
     CGFloat width = gridSize.size.width;
@@ -78,6 +89,11 @@
 //    // Drawing code
 //}
 
+/**
+ *	update the grid with the value of each card in the model of grif
+ *
+ *	@param	grid	the model of grid
+ */
 - (void) updateGridWithGridNumber:(PTGrid *)grid
 {
     if (grid == nil) {

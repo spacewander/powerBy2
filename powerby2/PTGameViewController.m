@@ -33,6 +33,7 @@
 - (void) setDefaultBackgroundColor:(UIView *)view;
 - (void) setDefaultLayoutColor:(UIView *)view;
 - (void) setLabelStyle:(UILabel *)label;
+
 @end
 
 @implementation PTGameViewController
@@ -60,9 +61,7 @@
         exit(1);
     }
     [self.view addSubview:self.gridView];
-    self.gridModel = [self.gridModel initWithGrid:[NSArray arrayWithObjects:
-                                                   GRIDS,
-                                                   nil]];
+    self.gridModel = [[PTGrid alloc] init];
     
     [self startGame];
 }
@@ -99,6 +98,9 @@
     [self setDefaultLayoutColor:label];
 }
 
+/**
+ *	prepare for the start of game
+ */
 - (void) startGame
 {
     [self.gridModel setRandomValue];
@@ -115,5 +117,8 @@
 {
     return NO;
 }
+
+#pragma mark - touch event
+
 
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 com.scutknight. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "PTCard.h"
 
 /**
@@ -31,13 +32,13 @@ enum ColorCombination {
 
 // define some colors
 #define DEFAULT_RED 0.9
-#define DEFAULT_GREEN 0.37
-#define DEFAULT_BLUE 0.32
+#define DEFAULT_GREEN 0.89
+#define DEFAULT_BLUE 0.85
 #define DEFAULT_ALPHA 0.35
 
-#define FONT_RED 0.97
-#define FONT_GREEN 0.96
-#define FONT_BLUE 0.945
+#define FONT_RED 0.465
+#define FONT_GREEN 0.43
+#define FONT_BLUE 0.39
 
 @interface PTCard ()
 
@@ -58,7 +59,7 @@ enum ColorCombination {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaultStyle];
-        self.cardValue = [NSNumber numberWithInt:1024];
+        self.cardValue = [NSNumber numberWithInt:0];
         [self updateWithValue];
     }
     return self;
@@ -85,6 +86,8 @@ enum ColorCombination {
     self.textAlignment = NSTextAlignmentCenter;
     self.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     
+    self.layer.cornerRadius = 3.0f;
+
     self.adjustsFontSizeToFitWidth = YES;
     CGFloat width = self.frame.size.width;
     // this font size is fit in 5 * 5 grid
