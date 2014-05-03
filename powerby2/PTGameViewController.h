@@ -14,5 +14,10 @@
 @interface PTGameViewController : UIViewController
 
 - (void) startGame;
+- (void) abortGame;
+- (void) startNewGameFromOldOne;
+- (void) lostGame;
+- (void) winGame;
+- (void) endGame;
 
 @end

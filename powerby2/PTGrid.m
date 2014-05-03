@@ -7,9 +7,26 @@
 //
 
 #import "PTGrid.h"
-#import "globalDefine.h"
+
+@interface PTGrid ()
+
+@property (nonatomic) NSUInteger emptyCardsNum;
+@property (nonatomic) BOOL maxBinaryNumberGot;
+
+- (void) helpForInit;
+@end
 
 @implementation PTGrid
+
+/**
+ *	called when self is inited by the superclass.
+ *  a method used to avoid repeating in different init method
+ */
+- (void) helpForInit
+{
+    self.emptyCardsNum = CARDS_NUMBER;
+    self.maxBinaryNumberGot = NO;
+}
 
 - (id)init
 {
@@ -19,6 +36,7 @@
         for (int i = 0; i < CARDS_NUMBER; ++i) {
             [self.values addObject:[NSNumber numberWithInt:0]];
         }
+        [self helpForInit];
     }
     return self;
 }
@@ -29,34 +47,85 @@
     if (self) {
         self.values = [NSArray arrayWithArray:gridArray];
         NSLog(@"%@",[self.values[0] description]);
+        [self helpForInit];
     }
     return self;
 }
 
 /**
- *	select two cards with initial value(2 or 4)
+ *	clear the state to the time this instance was inited
+ */
+- (void) clear
+{
+    for (int i = 0; i < CARDS_NUMBER; ++i) {
+        [self.values setObject:[NSNumber numberWithInt:0]  atIndexedSubscript:i];
+    }
+}
+
+/**
+ *	select two cards(which is with 0 value) with initial value(2 or 4)
  */
 - (void) setRandomValue
 {
     srandom((unsigned)time(0));
+    
     int selectFirstCard = random() % CARDS_NUMBER;
-    int selectSecondCard = random() % CARDS_NUMBER;
-    while (selectFirstCard == selectSecondCard) {
-        selectSecondCard = random() % CARDS_NUMBER;
+    while (self.values[selectFirstCard] != [NSNumber numberWithInt:0] ) {
+        selectFirstCard = random() % CARDS_NUMBER;
     }
     
     // there will be two in each two time in three, and will be four one third
     int firstValue = 2;
-    int secondValue = 2;
     if (random() % 3 == 0) {
         firstValue = 4;
     }
-    if (random() % 3 == 0) {
-        secondValue = 4;
-    }
     
-    [self.values setObject:[NSNumber numberWithInt:firstValue] atIndexedSubscript:(NSUInteger)selectFirstCard];
-    [self.values setObject:[NSNumber numberWithInt:secondValue] atIndexedSubscript:(NSUInteger)selectSecondCard];
+    [self.values setObject:[NSNumber numberWithInt:firstValue]
+        atIndexedSubscript:(NSUInteger)selectFirstCard];
+    --self.emptyCardsNum;
+}
+
+#pragma mark - handle swipe
+
+- (void) swipeLeft
+{
+    
+}
+
+- (void) swipeRight
+{
+    
+}
+
+- (void) swipeUp
+{
+    
+}
+
+- (void) swipeDown
+{
+    
+}
+
+#pragma mark - report game result
+
+/**
+ *	report the game result according to whether the max binary number is composed
+ *  or if there is an empty space for the new card
+ *
+ *	@return	gameResult
+ */
+- (enum PTGameResult) reportGameResult
+{
+    if (self.maxBinaryNumberGot) {
+        return WIN;
+    }
+    else if (self.emptyCardsNum == 0) {
+        return LOST;
+    }
+    else {
+        return GOON;
+    }
 }
 
 @end

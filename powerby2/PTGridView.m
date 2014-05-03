@@ -41,6 +41,15 @@
 }
 
 /**
+ *	clear the state to the time this instance was inited
+ */
+- (void) clear
+{
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self fillWithCards:self.frame];
+}
+
+/**
  *	@return	the total number of card
  */
 - (int) cardsNumber

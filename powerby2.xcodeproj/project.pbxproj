@@ -32,6 +32,7 @@
 		A33E64B518D2C39200D0C9A7 /* PTCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTCard.h; sourceTree = "<group>"; };
 		A33E64B618D2C39200D0C9A7 /* PTCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTCard.m; sourceTree = "<group>"; };
 		A352661418D702BF00137ACC /* globalDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = globalDefine.h; sourceTree = "<group>"; };
+		A357478018E9A2380080EDD6 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A38FAE3C18D0A31700900C78 /* powerby2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = powerby2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38FAE3F18D0A31700900C78 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A38FAE4118D0A31700900C78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -77,6 +78,7 @@
 		A38FAE3318D0A31700900C78 = {
 			isa = PBXGroup;
 			children = (
+				A357478018E9A2380080EDD6 /* AssetsLibrary.framework */,
 				A38FAE4518D0A31700900C78 /* powerby2 */,
 				A38FAE3E18D0A31700900C78 /* Frameworks */,
 				A38FAE3D18D0A31700900C78 /* Products */,
@@ -104,22 +106,21 @@
 		A38FAE4518D0A31700900C78 /* powerby2 */ = {
 			isa = PBXGroup;
 			children = (
-				A38FAE4618D0A31700900C78 /* Supporting Files */,
-				A3ADCBA218D1CAFA00E7BCFE /* resource */,
+				A352661418D702BF00137ACC /* globalDefine.h */,
+				A3FF606F19148FDB00E010BD /* InfoView */,
+				A38FAE5718D0A31700900C78 /* MainStoryboard.storyboard */,
 				A38FAE4E18D0A31700900C78 /* PTAppDelegate.h */,
 				A38FAE4F18D0A31700900C78 /* PTAppDelegate.m */,
-				A38FAE5718D0A31700900C78 /* MainStoryboard.storyboard */,
+				A33E64B518D2C39200D0C9A7 /* PTCard.h */,
+				A33E64B618D2C39200D0C9A7 /* PTCard.m */,
 				A38FAE5A18D0A31700900C78 /* PTGameViewController.h */,
 				A38FAE5B18D0A31700900C78 /* PTGameViewController.m */,
 				A3ADCB9F18D1CAE100E7BCFE /* PTGrid.h */,
 				A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */,
-				A38FAE6118D0A31700900C78 /* PTInfoViewController.h */,
-				A38FAE6218D0A31700900C78 /* PTInfoViewController.m */,
 				A3ADCBA318D1DCFD00E7BCFE /* PTGridView.h */,
 				A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */,
-				A33E64B518D2C39200D0C9A7 /* PTCard.h */,
-				A33E64B618D2C39200D0C9A7 /* PTCard.m */,
-				A352661418D702BF00137ACC /* globalDefine.h */,
+				A3ADCBA218D1CAFA00E7BCFE /* resource */,
+				A38FAE4618D0A31700900C78 /* Supporting Files */,
 			);
 			path = powerby2;
 			sourceTree = "<group>";
@@ -149,7 +150,26 @@
 			name = resource;
 			sourceTree = "<group>";
 		};
+		A3FF606F19148FDB00E010BD /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				A38FAE6118D0A31700900C78 /* PTInfoViewController.h */,
+				A38FAE6218D0A31700900C78 /* PTInfoViewController.m */,
+			);
+			name = InfoView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A357478218E9A25C0080EDD6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		A38FAE3B18D0A31700900C78 /* powerby2 */ = {
@@ -159,6 +179,7 @@
 				A38FAE3818D0A31700900C78 /* Sources */,
 				A38FAE3918D0A31700900C78 /* Frameworks */,
 				A38FAE3A18D0A31700900C78 /* Resources */,
+				A357478218E9A25C0080EDD6 /* Headers */,
 			);
 			buildRules = (
 			);

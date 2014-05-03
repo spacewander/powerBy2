@@ -14,5 +14,6 @@
 @property (strong, nonatomic) NSMutableArray *cards;
 
 - (void) updateGridWithGridNumber:(PTGrid *)grid;
+- (void) clear;
 
 @end

@@ -8,11 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+#import "globalDefine.h"
+
+/**
+ *	This class is the model of the Game
+ */
 @interface PTGrid : NSObject
 
 @property (strong) NSMutableArray* values;
 
 - (id) initWithGrid:(NSMutableArray *)gridArray;
 - (void) setRandomValue;
+- (void) clear;
+- (enum PTGameResult) reportGameResult;
+
+
+- (void) swipeLeft;
+- (void) swipeRight;
+- (void) swipeUp;
+- (void) swipeDown;
+
 
 @end
