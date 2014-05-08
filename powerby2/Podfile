@@ -1,0 +1,2 @@
+# platform :ios no need now
+pod 'CXAlertView', '~> 1.0.1'
