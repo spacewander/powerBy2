@@ -5,6 +5,7 @@
 //  Created by spacewander on 14-3-12.
 //  Copyright (c) 2014年 com.scutknight. All rights reserved.
 //
+#import "CXAlertView.h"
 
 #import "PTGameViewController.h"
 #import "PTGrid.h"
@@ -40,6 +41,8 @@
 - (void) handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
 - (void) newGameLoop;
 - (enum PTGameResult) getGameResult;
+- (void) recordResult;
+- (void) turnToRankView;
 
 @end
 
@@ -51,7 +54,7 @@
    
     self.theNewGameButton = [[UIButton alloc] initWithFrame:
                           CGRectMake(NEW_GAME_BUTTON_X, NEW_GAME_BUTTON_Y, LABEL_WIDTH, LABEL_HEIGHT)];
-    [self.theNewGameButton setTitle:@"New" forState:UIControlStateNormal];
+    [self.theNewGameButton setTitle:@"Replay" forState:UIControlStateNormal];
     [self setDefaultLayoutColor:self.theNewGameButton];
     [self setLabelStyle:self.theNewGameButton.titleLabel];
     [self.theNewGameButton addTarget:self action:@selector(startNewGameFromOldOne) forControlEvents:UIControlEventTouchUpInside];
@@ -250,7 +253,36 @@
  */
 - (void) lostGame
 {
+    // Create alertView with the old fashioned way.
+    CXAlertView *alertView = [[CXAlertView alloc]
+                              initWithTitle:@"Game Over"
+                              message:@"The game is over!\nChoose to replay or leave the Game!"
+                              cancelButtonTitle:nil];
+    // set the style of alertView
+    [alertView setShowBlurBackground:YES];
+    [alertView setTitleFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
+    alertView.alpha = 0.7;
+    [alertView setFrame:CGRectMake(GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT)];
     
+    // Add additional button as you like with block to handle UIControlEventTouchUpInside event.
+    [alertView addButtonWithTitle:@"Replay"
+                             type:CXAlertViewButtonTypeCancel
+                          handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                              [alertView dismiss];
+                              [self recordResult];
+                              [self startNewGameFromOldOne];
+                          }];
+    // end the game
+    [alertView addButtonWithTitle:@"Leave"
+                             type:CXAlertViewButtonTypeDefault
+                          handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                              [alertView dismiss];
+                              [self recordResult];
+                              [self endGame];
+                          }];
+    
+    // Remember to call this, or alertview will never be seen.
+    [alertView show];
 }
 
 /**
@@ -258,7 +290,37 @@
  */
 - (void) winGame
 {
+    // Create alertView with the old fashioned way.
+    CXAlertView *alertView = [[CXAlertView alloc]
+                              initWithTitle:@"You Win!"
+                              message:@"That is nearly impossible!\nCongratulation!"
+                              cancelButtonTitle:nil];
+    // set the style of alertView
+    [alertView setShowBlurBackground:YES];
+    [alertView setTitleFont:[UIFont fontWithName:@"Helvetica-Bold" size:30]];
+    alertView.alpha = 0.7;
+    [alertView setFrame:CGRectMake(GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT)];
     
+    // Add additional button as you like with block to handle UIControlEventTouchUpInside event.
+    [alertView addButtonWithTitle:@"Replay"
+                             type:CXAlertViewButtonTypeCancel
+                          handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                              // Dismiss alertview
+                              [alertView dismiss];
+                              [self recordResult];
+                              [self startNewGameFromOldOne];
+                          }];
+    // turn to the rank view
+    [alertView addButtonWithTitle:@"Enjoy"
+                             type:CXAlertViewButtonTypeDefault
+                          handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                              [alertView dismiss];
+                              [self recordResult];
+                              [self turnToRankView];
+                          }];
+    
+    // Remember to call this, or alertview will never be seen.
+    [alertView show];
 }
 
 
@@ -287,4 +349,13 @@
     }
 }
 
+- (void) recordResult
+{
+    
+}
+
+- (void) turnToRankView
+{
+    
+}
 @end

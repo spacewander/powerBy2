@@ -8,12 +8,16 @@
 
 #import "PTGrid.h"
 
+#define MAXBINARYNUM 4096
+
 @interface PTGrid ()
 
 @property (nonatomic) NSUInteger emptyCardsNum;
+@property (nonatomic) NSUInteger maxBinaryNum;
 @property (nonatomic) BOOL maxBinaryNumberGot;
 
 - (void) helpForInit;
+- (void) updateMaxBinaryNum;
 @end
 
 @implementation PTGrid
@@ -26,6 +30,7 @@
 {
     self.emptyCardsNum = CARDS_NUMBER;
     self.maxBinaryNumberGot = NO;
+    self.maxBinaryNum = 2;
 }
 
 - (id)init
@@ -60,6 +65,7 @@
     for (int i = 0; i < CARDS_NUMBER; ++i) {
         [self.values setObject:[NSNumber numberWithInt:0]  atIndexedSubscript:i];
     }
+    [self helpForInit];
 }
 
 /**
@@ -78,11 +84,26 @@
     int firstValue = 2;
     if (random() % 3 == 0) {
         firstValue = 4;
+        // the default value of maxBinaryNum is 2. So update it to 4.
+        if (self.maxBinaryNum < 4) {
+            self.maxBinaryNum = 4;
+        }
     }
     
     [self.values setObject:[NSNumber numberWithInt:firstValue]
         atIndexedSubscript:(NSUInteger)selectFirstCard];
     --self.emptyCardsNum;
+}
+
+/**
+ *	update the MaxBinaryNum and MaxBinaryNumberGot. Called after each swipe handler.
+ */
+- (void) updateMaxBinaryNum
+{
+    self.maxBinaryNum *= 2;
+    if (self.maxBinaryNum == MAXBINARYNUM) {
+        self.maxBinaryNumberGot = YES;
+    }
 }
 
 #pragma mark - handle swipe
