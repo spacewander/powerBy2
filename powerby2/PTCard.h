@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) NSNumber *cardValue;
 
-- (void) updateWithValue;
+- (void) update;
 - (void) setDefaultStyle;
 
 @end

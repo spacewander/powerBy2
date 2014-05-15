@@ -10,6 +10,9 @@
 
 #import "globalDefine.h"
 
+@class PTGridView;
+@class PTGameViewController;
+
 /**
  *	This class is the model of the Game
  */
@@ -21,7 +24,8 @@
 - (void) setRandomValue;
 - (void) clear;
 - (enum PTGameResult) reportGameResult;
-
+- (void) bindWithDelegate:(PTGridView *)delegate;
+- (void) bindWithController:(PTGameViewController *)controller;
 
 - (void) swipeLeft;
 - (void) swipeRight;

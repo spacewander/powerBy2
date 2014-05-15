@@ -60,7 +60,7 @@ enum ColorCombination {
     if (self) {
         [self setDefaultStyle];
         self.cardValue = [NSNumber numberWithInt:0];
-        [self updateWithValue];
+        [self update];
     }
     return self;
 }
@@ -162,7 +162,7 @@ enum ColorCombination {
 /**
  *	update the text and style according to the value
  */
-- (void) updateWithValue
+- (void) update
 {
     int textValue = [self.cardValue intValue];
     

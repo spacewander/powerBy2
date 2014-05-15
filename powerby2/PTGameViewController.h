@@ -20,4 +20,6 @@
 - (void) winGame;
 - (void) endGame;
 
+- (void) addScore:(NSUInteger)score;
+
 @end

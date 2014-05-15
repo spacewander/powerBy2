@@ -13,7 +13,9 @@
 
 @property (strong, nonatomic) NSMutableArray *cards;
 
-- (void) updateGridWithGridNumber:(PTGrid *)grid;
+- (void) updateGridWithGridNumber:(NSUInteger)gridNumber;
+- (void) updateGrid;
 - (void) clear;
+- (void) bindWithDelegate:(PTGrid *)delegate;
 
 @end

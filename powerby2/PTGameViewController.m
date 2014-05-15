@@ -32,6 +32,9 @@
 // for the name of the button, it avoid the limitation of ARC
 @property (strong, nonatomic) UIButton *theNewGameButton;
 
+@property (nonatomic) NSUInteger highestScore;
+@property (nonatomic) NSUInteger score;
+
 @property (strong, nonatomic) PTGrid *gridModel;
 @property (strong, nonatomic) PTGridView *gridView;
 
@@ -60,6 +63,7 @@
     [self.theNewGameButton addTarget:self action:@selector(startNewGameFromOldOne) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.theNewGameButton];
     
+    self.score = 0;
     self.scoreLabel = [[UILabel alloc] initWithFrame:
                        CGRectMake(FIRST_LABEL_X,FIRST_LABEL_Y, LABEL_WIDTH, LABEL_HEIGHT)];
 	self.scoreLabel.text = @"Score";
@@ -68,7 +72,8 @@
     
     self.highestScoreLabel = [[UILabel alloc] initWithFrame:
                        CGRectMake(SECOND_LABEL_X,SECOND_LABEL_Y, LABEL_WIDTH, LABEL_HEIGHT)];
-    self.highestScoreLabel.text = @"0";
+    self.highestScore = 0; // FIXME
+    [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     [self setLabelStyle:self.highestScoreLabel];
     [self.view addSubview:self.highestScoreLabel];
     
@@ -79,7 +84,12 @@
         exit(1);
     }
     [self.view addSubview:self.gridView];
+    
     self.gridModel = [[PTGrid alloc] init];
+    // two-way binding
+    [self.gridModel bindWithDelegate:self.gridView];
+    // also bind it with its controller
+    [self.gridModel bindWithController:self];
     
     UISwipeGestureRecognizer *recognizer;
     
@@ -138,6 +148,24 @@
 }
 
 /**
+ *	update the current score
+ *
+ *	@param	score	the current score should be it
+ */
+- (void)addScore:(NSUInteger)score
+{
+    self.score += score;
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%u", self.score]];
+    
+    if (self.highestScore < score) {
+        self.highestScore += score;
+        [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
+    }
+}
+
+#pragma mark - game loop
+
+/**
  *	leave current game and start the new one
  */
 - (void) startNewGameFromOldOne
@@ -153,7 +181,8 @@
 {
     [self.gridModel setRandomValue];
     [self.gridModel setRandomValue];
-    [self.gridView updateGridWithGridNumber:self.gridModel];
+    
+    [self.gridView updateGrid];
 }
 
 /**
@@ -205,6 +234,8 @@
         default:
             break;
     }
+//    [self.gridView updateGridWithGridNumber]; no need to use it.
+//    Change the grid view during the grid model is handling the transform of each cards
     [self newGameLoop];
 }
 
@@ -215,12 +246,11 @@
  */
 - (void) newGameLoop
 {
-    [self.gridView updateGridWithGridNumber:self.gridModel];
     enum PTGameResult gameResult = [self getGameResult];
     switch (gameResult) {
         case GOON:
             [self.gridModel setRandomValue];
-            [self.gridView updateGridWithGridNumber:self.gridModel];
+            [self.gridView updateGrid];
             break;
         case WIN:
             [self winGame];
