@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "PTGrid.h"
 
+/**
+ *	the view of grid(the part which user can swipe and tranform cards on it)
+ */
 @interface PTGridView : UIView
 
 @property (strong, nonatomic) NSMutableArray *cards;

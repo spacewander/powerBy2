@@ -145,7 +145,7 @@
     }
     
     if (self.controller != nil) {
-        [self.controller addScore:(NSUInteger)(value / 2)];
+        [self.controller addScore:(NSUInteger)value];
     }
     else {
         NSLog(@"the controllor of PTGrid should not be nil!");
@@ -181,7 +181,8 @@
                 }
                 // squeeze the card
                 // make sure that the k should be compared with the one in above line
-                if (k != 0 && self.values[step + k] == self.values[step + k - 1]) {
+                if (k != 0 &&
+                    [self.values[step + k] compare:self.values[step + k - 1]] ==  NSOrderedSame) {
                     self.values[step + k] = [NSNumber numberWithInt:0];
                     [self squeeze:(step + k - 1)];
                 } // end if squeeze
@@ -208,7 +209,8 @@
                 }
                 // squeeze the card
                 // make sure that the k should be compared with the one in below line
-                if (k != (CARDS_PER_LINE - 1) && self.values[step + k] == self.values[step + k + 1]) {
+                if (k != (CARDS_PER_LINE - 1) &&
+                    [self.values[step + k] compare:self.values[step + k + 1]] ==  NSOrderedSame) {
                     self.values[step + k] = [NSNumber numberWithInt:0];
                     [self squeeze:(step + k + 1)];
                 } // end if squeeze
@@ -221,12 +223,60 @@
 
 - (void) swipeUp
 {
-    
+    for (int i = 0; i < CARDS_PER_LINE; ++i) {
+        for (int j = 0, k = 0; j < CARDS_PER_LINE; ++j) {
+            // if the card is empty, pass
+            // remember to compare with NSNumber
+            if (self.values[i + CARDS_PER_LINE * j] != [NSNumber numberWithInt:0]) {
+                // if need move
+                if (k != j) {
+                    self.values[i + k * CARDS_PER_LINE] = self.values[i + j * CARDS_PER_LINE];
+                    // clean original value
+                    self.values[i + j * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
+                }
+                // squeeze the card
+                // make sure that the k should be compared with the one in above line
+                if (k != 0 &&
+                    [self.values[i + k * CARDS_PER_LINE]
+                        compare:self.values[i + (k - 1) * CARDS_PER_LINE]] == NSOrderedSame) {
+                    
+                    self.values[i + k * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
+                    [self squeeze:(i + (k - 1) * CARDS_PER_LINE)];
+                } // end if squeeze
+                
+                ++k;
+            } // end not equal to 0
+        }// end for rows
+    }// end for cols
 }
 
 - (void) swipeDown
 {
-    
+    for (int i = 0; i < CARDS_PER_LINE; ++i) {
+        for (int j = CARDS_PER_LINE - 1, k = CARDS_PER_LINE - 1; j >= 0; --j) {
+            // if the card is empty, pass
+            // remember to compare with NSNumber
+            if (self.values[i + CARDS_PER_LINE * j] != [NSNumber numberWithInt:0]) {
+                // if need move
+                if (k != j) {
+                    self.values[i + k * CARDS_PER_LINE] = self.values[i + j * CARDS_PER_LINE];
+                    // clean original value
+                    self.values[i + j * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
+                }
+                // squeeze the card
+                // make sure that the k should be compared with the one in above line
+                if (k != (CARDS_PER_LINE - 1) &&
+                    [self.values[i + k * CARDS_PER_LINE]
+                      compare:self.values[i + (k + 1) * CARDS_PER_LINE]] ==  NSOrderedSame) {
+                    
+                    self.values[i + k * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
+                    [self squeeze:(i + (k + 1) * CARDS_PER_LINE)];
+                } // end if squeeze
+                
+                --k;
+            } // end not equal to 0
+        }// end for rows
+    }// end for cols
 }
 
 #pragma mark - report game result

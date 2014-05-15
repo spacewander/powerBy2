@@ -43,6 +43,7 @@
 - (void) setLabelStyle:(UILabel *)label;
 - (void) handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
 - (void) newGameLoop;
+- (void) clear;
 - (enum PTGameResult) getGameResult;
 - (void) recordResult;
 - (void) turnToRankView;
@@ -157,8 +158,8 @@
     self.score += score;
     [self.scoreLabel setText:[NSString stringWithFormat:@"%u", self.score]];
     
-    if (self.highestScore < score) {
-        self.highestScore += score;
+    if (self.highestScore < self.score) {
+        self.highestScore = self.score;
         [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     }
 }
@@ -190,6 +191,19 @@
  */
 - (void) abortGame
 {
+    [self clear];
+}
+
+/**
+ *	clear the data and view in the main game view
+ */
+- (void) clear
+{
+    self.score = 0;
+    [self.scoreLabel setText:[NSString stringWithFormat:@"%u", self.score]];
+    self.highestScore = 0; // FIXME
+    [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
+    
     [self.gridModel clear];
     [self.gridView clear];
 }
@@ -200,6 +214,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *	should not autorotate
+ *
+ *	@return	NO
+ */
 - (BOOL)shouldAutorotate
 {
     return NO;
@@ -234,8 +253,7 @@
         default:
             break;
     }
-//    [self.gridView updateGridWithGridNumber]; no need to use it.
-//    Change the grid view during the grid model is handling the transform of each cards
+    [self.gridView updateGrid];
     [self newGameLoop];
 }
 
@@ -262,7 +280,6 @@
         default:
             break;
     }
-    
 }
 
 #pragma mark - game result
@@ -388,4 +405,5 @@
 {
     
 }
+
 @end

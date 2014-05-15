@@ -10,9 +10,6 @@
 #import "PTCard.h"
 #import "globalDefine.h"
 
-#define gapWidth 5
-#define gapHeight 5
-
 @interface PTGridView ()
 
 @property (strong) PTCard *firstCard;
@@ -80,6 +77,9 @@
     
     self.cards = [NSMutableArray array];
     int cardsNumberPerLine = [self cardsNumberPerLine];
+    int gapWidth = CARDS_PER_LINE;
+    int gapHeight = CARDS_PER_LINE;
+    
     CGFloat gridWidth = (width - (cardsNumberPerLine + 1) * gapWidth) / cardsNumberPerLine;
     CGFloat gridHeight = (height - (cardsNumberPerLine + 1) * gapHeight) / cardsNumberPerLine;
     for (int i = 0; i < cardsNumberPerLine; ++i) {
@@ -154,4 +154,5 @@
         [self.cards[gridNumber] update];
     }
 }
+
 @end
