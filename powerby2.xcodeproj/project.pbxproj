@@ -28,6 +28,8 @@
 		A38FAE6718D0A31700900C78 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A38FAE6618D0A31700900C78 /* second@2x.png */; };
 		A3ADCBA118D1CAE100E7BCFE /* PTGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */; };
 		A3ADCBA518D1DCFD00E7BCFE /* PTGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */; };
+		A3E6D2D01929C1C800393F7C /* PTUserManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A3E6D2CE1929C1C800393F7C /* PTUserManager.h */; };
+		A3E6D2D11929C1C800393F7C /* PTUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E6D2CF1929C1C800393F7C /* PTUserManager.m */; };
 		A3FE7200191530AE001762C2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = A3FE71FF191530AE001762C2 /* Podfile */; };
 		CD4AB499EC3D468AA2CAEB66 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AC7AA2CABF4D25A6300EA8 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,9 @@
 		A3ADCBA018D1CAE100E7BCFE /* PTGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGrid.m; sourceTree = "<group>"; };
 		A3ADCBA318D1DCFD00E7BCFE /* PTGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTGridView.h; sourceTree = "<group>"; };
 		A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTGridView.m; sourceTree = "<group>"; };
+		A3E6D2CE1929C1C800393F7C /* PTUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTUserManager.h; sourceTree = "<group>"; };
+		A3E6D2CF1929C1C800393F7C /* PTUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTUserManager.m; sourceTree = "<group>"; };
+		A3E6D2D3192A133A00393F7C /* userManagerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userManagerDefine.h; sourceTree = "<group>"; };
 		A3FE71FF191530AE001762C2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		C4EE8A86499241DEB114D7DE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +125,7 @@
 		A38FAE4518D0A31700900C78 /* powerby2 */ = {
 			isa = PBXGroup;
 			children = (
+				A3E6D2D3192A133A00393F7C /* userManagerDefine.h */,
 				A352661418D702BF00137ACC /* globalDefine.h */,
 				A3FF606F19148FDB00E010BD /* InfoView */,
 				A38FAE5718D0A31700900C78 /* MainStoryboard.storyboard */,
@@ -136,6 +142,7 @@
 				A3ADCBA218D1CAFA00E7BCFE /* resource */,
 				A38FAE4618D0A31700900C78 /* Supporting Files */,
 				A3FE71FF191530AE001762C2 /* Podfile */,
+				A3E6D2D21929C1E000393F7C /* UserManager */,
 			);
 			path = powerby2;
 			sourceTree = "<group>";
@@ -165,6 +172,15 @@
 			name = resource;
 			sourceTree = "<group>";
 		};
+		A3E6D2D21929C1E000393F7C /* UserManager */ = {
+			isa = PBXGroup;
+			children = (
+				A3E6D2CE1929C1C800393F7C /* PTUserManager.h */,
+				A3E6D2CF1929C1C800393F7C /* PTUserManager.m */,
+			);
+			name = UserManager;
+			sourceTree = "<group>";
+		};
 		A3FF606F19148FDB00E010BD /* InfoView */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A360BC6B1926287200C5E716 /* PTRankCell.h in Headers */,
+				A3E6D2D01929C1C800393F7C /* PTUserManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +322,7 @@
 				A3ADCBA518D1DCFD00E7BCFE /* PTGridView.m in Sources */,
 				A33E64B718D2C39200D0C9A7 /* PTCard.m in Sources */,
 				A360BC6C1926287200C5E716 /* PTRankCell.m in Sources */,
+				A3E6D2D11929C1C800393F7C /* PTUserManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

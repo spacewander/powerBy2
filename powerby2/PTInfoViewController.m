@@ -6,9 +6,11 @@
 //  Copyright (c) 2014年 com.scutknight. All rights reserved.
 //
 
+#import "globalDefine.h"
+#import "userManagerDefine.h"
 #import "PTInfoViewController.h"
 #import "PTRankCell.h"
-#import "globalDefine.h"
+#import "PTUserManager.h"
 
 #define CELL_WIDTH 320
 #define CELL_HEIGHT 240
@@ -19,20 +21,47 @@ static NSString *CellIdentifier = @"Cell";
 
 @property (nonatomic) UITableView *ranks;
 @property (weak, nonatomic) IBOutlet UITextView *description;
-
-@property (nonatomic) NSUInteger ranger;
+/**
+ *	range define how many ranks should be displayed
+ */
+@property (nonatomic) NSUInteger range;
+@property (nonatomic) NSMutableArray *scores;
+@property (nonatomic) PTUserManager *manager;
 
 - (void) setBackgroundColor:(UIView *)view;
+- (void) updateRank;
 @end
 
 @implementation PTInfoViewController
 
+/**
+ *	init data part here
+ */
 - (void) loadView
 {
     [super loadView];
-    self.ranger = 8;
+    self.manager = [PTUserManager sharedInstance];
+    // here setup how many rows(also how many ranks) should be displayed
+    self.range = 7;
+    
+    self.scores = [NSMutableArray array];
+    // make sure the size of self.scores should be equal to self.range
+    [self.scores setArray:[self.manager selectScores:self.range]];
+    if ([self.scores count] < self.range) {
+        for (int i = [self.scores count] - 1; i < self.range; i++) {
+            [self.scores addObject:[NSNumber numberWithInt:0]];
+        }
+    }
+    
+    //observer to refresh the table view
+    //notification was sent by user manager controller
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRank)
+                                                 name:UPDATE_RANK object:nil];
 }
 
+/**
+ *	init view part here
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,21 +85,35 @@ static NSString *CellIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *	should not autorotate
+ */
 - (BOOL)shouldAutorotate
 {
     return NO;
 }
 
-
+/**
+ *  set the background color as the other part of this app
+ */
 - (void)setBackgroundColor:(UIView *)view
 {
     view.backgroundColor = [UIColor colorWithRed:BACKGROUND_COLOR_RED green:BACKGROUND_COLOR_GREEN
                                             blue:BACKGROUND_COLOR_BLUE alpha:BACKGROUND_COLOR_ALPHA];
 }
 
+/**
+ *	update rank view
+ */
+- (void) updateRank
+{
+    [self.scores setArray:[self.manager selectScores:self.range]];
+    [self.ranks reloadData];
+}
+
 #pragma mark - Table view data source
 
-/*
+/**
  * Return the number of sections. There is only one section now.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -80,9 +123,13 @@ static NSString *CellIdentifier = @"Cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.ranger;
+    // since the first row is empty
+    return self.range + 1;
 }
 
+/**
+ *  @return 30.0
+ */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 30.0;
@@ -102,11 +149,18 @@ static NSString *CellIdentifier = @"Cell";
 
     //set score information
     NSUInteger scoreIndex = [indexPath row]; // 0 ~ self.ranger, 0 is the header
-    if ([[[cell class] description] compare:[PTRankCell description]] == NSOrderedSame) {
-        [cell setRank:(scoreIndex + 1)];
+    
+    // the first row is empty
+    if (scoreIndex == 0) {
+        cell.textLabel.text = @"";
+        return cell;
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%u", 0];
+    if ([[[cell class] description] compare:[PTRankCell description]] == NSOrderedSame) {
+        [cell setRank:scoreIndex];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%d\t", [self.scores[scoreIndex - 1] intValue]];
     return cell;
 }
 

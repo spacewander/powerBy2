@@ -18,11 +18,13 @@
     if (self) {
         CGFloat height = self.frame.size.height;
         // dirty hack to keep the text in header is on the same baseline with the one in textLabel
-        self.header = [[UILabel alloc] initWithFrame:CGRectMake(0, -10, RANK_LENGTH, height)];
+        self.header = [[UILabel alloc] initWithFrame:CGRectMake(0, -8, RANK_LENGTH, height)];
+        self.header.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
         self.header.textAlignment = NSTextAlignmentLeft;
         [self.header setBackgroundColor:[UIColor clearColor]];
         [self addSubview:self.header];
         
+        self.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
         self.textLabel.text = [NSString stringWithFormat:@"%d", 0];
         self.textLabel.textAlignment = NSTextAlignmentRight;
     }
