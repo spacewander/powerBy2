@@ -77,8 +77,8 @@
     
     self.cards = [NSMutableArray array];
     int cardsNumberPerLine = [self cardsNumberPerLine];
-    int gapWidth = CARDS_PER_LINE;
-    int gapHeight = CARDS_PER_LINE;
+    int gapWidth = [self cardsNumberPerLine];
+    int gapHeight = [self cardsNumberPerLine];
     
     CGFloat gridWidth = (width - (cardsNumberPerLine + 1) * gapWidth) / cardsNumberPerLine;
     CGFloat gridHeight = (height - (cardsNumberPerLine + 1) * gapHeight) / cardsNumberPerLine;

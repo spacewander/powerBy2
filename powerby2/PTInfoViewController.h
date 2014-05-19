@@ -11,6 +11,6 @@
 /**
  *	the information about this game
  */
-@interface PTInfoViewController : UIViewController
+@interface PTInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
