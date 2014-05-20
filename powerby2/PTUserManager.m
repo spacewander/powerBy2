@@ -7,10 +7,14 @@
 //
 
 #import "PTUserManager.h"
+#import "PTDBController.h"
 #import "userManagerDefine.h"
 
 @interface PTUserManager ()
 
+@property (nonatomic) PTDBController *database;
+
+- (void) insertScoreSuccess;
 @end
 
 @implementation PTUserManager
@@ -20,7 +24,7 @@
  */
 static PTUserManager *sharedSingleton_ = nil;
 
-#pragma mark - single instance methods
+#pragma mark - singleton instance methods
 
 /**
  *	the only one puclic init method.Avoid to create multi instances
@@ -53,22 +57,12 @@ static PTUserManager *sharedSingleton_ = nil;
 }
 
 /**
- *	@return	the path where user file is in
- */
-- (NSString *)dataFilePath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    
-    return [documentDirectory stringByAppendingPathComponent:dbFile];
-}
-
-/**
  *	update all scores when init
  */
 - (id)init
 {
-    if (self = [super init]) {        
+    if (self = [super init]) {
+        self.database = [PTDBController sharedInstance];
         //add observer to database and user model
         [[NSNotificationCenter defaultCenter]
             addObserver:self selector:@selector(insertScoreSuccess) name:UPDATE_DB object:nil];
@@ -89,16 +83,28 @@ static PTUserManager *sharedSingleton_ = nil;
  */
 - (NSMutableArray *) selectScores:(NSUInteger)rankNumber
 {
-    NSMutableArray *scores = [NSMutableArray arrayWithCapacity:rankNumber];
-    for (NSUInteger i = 0; i < rankNumber; ++i) {
-         [scores addObject:[NSNumber numberWithInt:0]];
+    NSMutableArray *result = [self.database selectScores:rankNumber];
+    NSMutableArray *scores = [NSMutableArray arrayWithArray:result];
+    // fill the scores array if need
+    int gap;
+    if ((gap = rankNumber - [scores count]) > 0) {
+        while (gap) {
+            [scores addObject:[NSNumber numberWithInt:0]];
+            gap--;
+        }
     }
     return scores;
 }
 
+- (NSUInteger) selectHighestScore
+{
+    NSUInteger highestScore = [self.database selectHighestScore];
+    return highestScore;
+}
+
 - (void) insertScore:(NSUInteger)score
 {
-    
+    [self.database insertScore:score];
 }
 
 /**

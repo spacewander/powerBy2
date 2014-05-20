@@ -10,6 +10,7 @@
 #import "PTGameViewController.h"
 #import "PTGrid.h"
 #import "PTGridView.h"
+#import "PTUserManager.h"
 #import "globalDefine.h"
 
 // the full screen is 320 * 480
@@ -37,6 +38,7 @@
 
 @property (strong, nonatomic) PTGrid *gridModel;
 @property (strong, nonatomic) PTGridView *gridView;
+@property (strong, nonatomic) PTUserManager *userManager;
 
 - (void) setDefaultBackgroundColor:(UIView *)view;
 - (void) setDefaultLayoutColor:(UIView *)view;
@@ -73,7 +75,7 @@
     
     self.highestScoreLabel = [[UILabel alloc] initWithFrame:
                        CGRectMake(SECOND_LABEL_X,SECOND_LABEL_Y, LABEL_WIDTH, LABEL_HEIGHT)];
-    self.highestScore = 0; // FIXME
+    self.highestScore = [self.userManager selectHighestScore]; // FIXME
     [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     [self setLabelStyle:self.highestScoreLabel];
     [self.view addSubview:self.highestScoreLabel];
@@ -122,6 +124,8 @@
     
     self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, GAME_WIDTH, GAME_HEIGHT)];
     [self setDefaultBackgroundColor:self.view];
+    
+    self.userManager = [PTUserManager sharedInstance];
 }
 
 - (void) setDefaultBackgroundColor:(UIView *)view
@@ -396,9 +400,12 @@
     }
 }
 
+/**
+ *	save the final score into database
+ */
 - (void) recordResult
 {
-    
+    [self.userManager insertScore:self.score];
 }
 
 - (void) turnToRankView

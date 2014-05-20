@@ -17,6 +17,7 @@
 @interface PTUserManager : NSObject
 
 + (PTUserManager *)sharedInstance;
+- (NSUInteger)selectHighestScore;
 - (NSMutableArray *)selectScores:(NSUInteger)rankNumber;
 - (void)insertScore:(NSUInteger)score;
 

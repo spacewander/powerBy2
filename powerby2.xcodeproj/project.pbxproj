@@ -30,6 +30,8 @@
 		A3ADCBA518D1DCFD00E7BCFE /* PTGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ADCBA418D1DCFD00E7BCFE /* PTGridView.m */; };
 		A3E6D2D01929C1C800393F7C /* PTUserManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A3E6D2CE1929C1C800393F7C /* PTUserManager.h */; };
 		A3E6D2D11929C1C800393F7C /* PTUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E6D2CF1929C1C800393F7C /* PTUserManager.m */; };
+		A3E6D2D6192A34DD00393F7C /* PTDBController.h in Headers */ = {isa = PBXBuildFile; fileRef = A3E6D2D4192A34DD00393F7C /* PTDBController.h */; };
+		A3E6D2D7192A34DD00393F7C /* PTDBController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E6D2D5192A34DD00393F7C /* PTDBController.m */; };
 		A3FE7200191530AE001762C2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = A3FE71FF191530AE001762C2 /* Podfile */; };
 		CD4AB499EC3D468AA2CAEB66 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71AC7AA2CABF4D25A6300EA8 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -73,6 +75,8 @@
 		A3E6D2CE1929C1C800393F7C /* PTUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTUserManager.h; sourceTree = "<group>"; };
 		A3E6D2CF1929C1C800393F7C /* PTUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTUserManager.m; sourceTree = "<group>"; };
 		A3E6D2D3192A133A00393F7C /* userManagerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userManagerDefine.h; sourceTree = "<group>"; };
+		A3E6D2D4192A34DD00393F7C /* PTDBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTDBController.h; sourceTree = "<group>"; };
+		A3E6D2D5192A34DD00393F7C /* PTDBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTDBController.m; sourceTree = "<group>"; };
 		A3FE71FF191530AE001762C2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		C4EE8A86499241DEB114D7DE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +181,8 @@
 			children = (
 				A3E6D2CE1929C1C800393F7C /* PTUserManager.h */,
 				A3E6D2CF1929C1C800393F7C /* PTUserManager.m */,
+				A3E6D2D4192A34DD00393F7C /* PTDBController.h */,
+				A3E6D2D5192A34DD00393F7C /* PTDBController.m */,
 			);
 			name = UserManager;
 			sourceTree = "<group>";
@@ -201,6 +207,7 @@
 			files = (
 				A360BC6B1926287200C5E716 /* PTRankCell.h in Headers */,
 				A3E6D2D01929C1C800393F7C /* PTUserManager.h in Headers */,
+				A3E6D2D6192A34DD00393F7C /* PTDBController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +330,7 @@
 				A33E64B718D2C39200D0C9A7 /* PTCard.m in Sources */,
 				A360BC6C1926287200C5E716 /* PTRankCell.m in Sources */,
 				A3E6D2D11929C1C800393F7C /* PTUserManager.m in Sources */,
+				A3E6D2D7192A34DD00393F7C /* PTDBController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
