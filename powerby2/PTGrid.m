@@ -73,7 +73,9 @@
     for (int i = 0; i < CARDS_NUMBER; ++i) {
         [self.values setObject:[NSNumber numberWithInt:0]  atIndexedSubscript:i];
     }
-    [self helpForInit];
+    self.emptyCardsNum = CARDS_NUMBER;
+    self.maxBinaryNumberGot = NO;
+    self.maxBinaryNum = 2;
 }
 
 /**

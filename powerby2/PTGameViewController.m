@@ -43,6 +43,7 @@
 - (void) setDefaultBackgroundColor:(UIView *)view;
 - (void) setDefaultLayoutColor:(UIView *)view;
 - (void) setLabelStyle:(UILabel *)label;
+- (void) addRecognizers;
 - (void) handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
 - (void) newGameLoop;
 - (void) clear;
@@ -75,7 +76,7 @@
     
     self.highestScoreLabel = [[UILabel alloc] initWithFrame:
                        CGRectMake(SECOND_LABEL_X,SECOND_LABEL_Y, LABEL_WIDTH, LABEL_HEIGHT)];
-    self.highestScore = [self.userManager selectHighestScore]; // FIXME
+    self.highestScore = [self.userManager selectHighestScore];
     [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     [self setLabelStyle:self.highestScoreLabel];
     [self.view addSubview:self.highestScoreLabel];
@@ -94,6 +95,15 @@
     // also bind it with its controller
     [self.gridModel bindWithController:self];
     
+    [self addRecognizers];
+    [self startGame];
+}
+
+/**
+ *	add recognizers for swipe actions
+ */
+- (void) addRecognizers
+{
     UISwipeGestureRecognizer *recognizer;
     
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
@@ -111,8 +121,6 @@
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:UISwipeGestureRecognizerDirectionDown];
     [[self view] addGestureRecognizer:recognizer];
-    
-    [self startGame];
 }
 
 - (void) loadView
@@ -205,7 +213,7 @@
 {
     self.score = 0;
     [self.scoreLabel setText:[NSString stringWithFormat:@"%u", self.score]];
-    self.highestScore = 0; // FIXME
+    self.highestScore = [self.userManager selectHighestScore];
     [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     
     [self.gridModel clear];
@@ -258,7 +266,8 @@
             break;
     }
     [self.gridView updateGrid];
-    [self newGameLoop];
+                    [self lostGame];//
+//    [self newGameLoop];
 }
 
 #pragma mark - new game loop
@@ -405,6 +414,7 @@
  */
 - (void) recordResult
 {
+    NSLog(@"record result");
     [self.userManager insertScore:self.score];
 }
 

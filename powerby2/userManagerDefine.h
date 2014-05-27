@@ -13,8 +13,15 @@
 #ifndef powerby2_userManagerDefine_h
 #define powerby2_userManagerDefine_h
 
+/**
+ *	the filename of sqlite3 database
+ */
 #define dbFile @"userScores.db"
 
+/**
+ *	the name of NSNotifications. Used in the InfoViewController, the userManager,
+ *  and the DBController.
+ */
 #define UPDATE_RANK @"UserManagerUpdateScore"
 #define UPDATE_DB @"DBInsertScoreSuccess"
 

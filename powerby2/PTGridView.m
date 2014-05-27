@@ -46,7 +46,6 @@
 {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self fillWithCards:self.frame];
-    self.delegate = nil;
 }
 
 /**
