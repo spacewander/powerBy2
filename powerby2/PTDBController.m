@@ -23,7 +23,7 @@ static PTDBController *sharedSingleton_ = nil;
 
 - (NSString *)dataFilePath;
 - (NSString *)timeStamp;
-- (NSUInteger)countCurrentItems;
+- (NSUInteger)countCurrentRows:(NSString *)table;
 - (void)connectWithDB;
 - (void)closeDB;
 - (void)createScoreTable;
@@ -53,6 +53,16 @@ static PTDBController *sharedSingleton_ = nil;
 }
 
 /**
+ *	In normal sotuation, the database should be only closed here.
+ */
+- (void) dealloc
+{
+    [self closeDB];
+    sharedSingleton_ = nil;
+//    [super dealloc]; if you use ARC, [super dealloc] is not need anymore, nice!
+}
+
+/**
  *	@return	the path where user file is in
  */
 - (NSString *)dataFilePath
@@ -64,7 +74,7 @@ static PTDBController *sharedSingleton_ = nil;
 }
 
 /**
- * the NSString looks like 2014-05-20 08:51
+ * @return a NSString looks like 2014-05-20 08:51
  */
 - (NSString *)timeStamp
 {
@@ -125,7 +135,7 @@ static PTDBController *sharedSingleton_ = nil;
         [self closeDB];
     }
     
-    self.latestRowid = [self countCurrentItems];
+    self.latestRowid = [self countCurrentRows:@"score"];
 }
 
 /**
@@ -133,6 +143,9 @@ static PTDBController *sharedSingleton_ = nil;
  */
 - (void) closeDB
 {
+    if (self.database == nil) {
+        return;
+    }
     NSInteger error;
     error = sqlite3_close(_database);
     if (error != SQLITE_OK) {
@@ -166,11 +179,35 @@ static PTDBController *sharedSingleton_ = nil;
 
 #pragma mark - database control
 
-- (NSUInteger) countCurrentItems
+/**
+ *	count how many rows are there in a table
+ *
+ *	@param	table	a given table
+ *
+ *	@return	the number of rows
+ */
+- (NSUInteger) countCurrentRows:(NSString *)table
 {
+    NSUInteger numTableRecords = 0;
     [self connectWithDB];
     
-    return 0;
+    NSString *countItemsSQL = [NSString stringWithFormat: @"select count(*) from %@", table];
+    
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(_database, [countItemsSQL UTF8String], -1, &stmt, NULL) == SQLITE_OK) {
+        while(sqlite3_step(stmt) == SQLITE_ROW) {
+            numTableRecords = sqlite3_column_int(stmt, 0);
+        }
+        sqlite3_finalize(stmt);
+    }
+    else {
+        NSLog(@"%@", [NSString stringWithFormat:@"could not prepare statement: %s",
+                      sqlite3_errmsg(_database)]);
+        sqlite3_finalize(stmt);
+        [self closeDB];
+    }
+    
+    return numTableRecords;
 }
 
 /**
@@ -237,7 +274,6 @@ static PTDBController *sharedSingleton_ = nil;
     }
     
     NSLog(@"query scores successfully");
-    NSLog(@"%@", [scores description]);
     return scores;
 }
 
@@ -248,7 +284,6 @@ static PTDBController *sharedSingleton_ = nil;
  */
 - (void)insertScore:(NSUInteger)score
 {
-    score = 10;
     // may there is something wrong happened
     if (score <= 0) {
         return;

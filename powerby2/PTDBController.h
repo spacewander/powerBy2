@@ -10,6 +10,9 @@
 
 /**
  *	All the dull things are done in this tiny class.
+ *
+ *  Attention! We will only close the database when something error happens 
+ *  or the dealloc is called.
  */
 @interface PTDBController : NSObject
 

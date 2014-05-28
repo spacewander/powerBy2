@@ -266,8 +266,7 @@
             break;
     }
     [self.gridView updateGrid];
-                    [self lostGame];//
-//    [self newGameLoop];
+    [self newGameLoop];
 }
 
 #pragma mark - new game loop
