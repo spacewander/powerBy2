@@ -11,6 +11,7 @@
 #import "PTGridViewController.h"
 #import "PTGridView.h"
 #import "PTUserManager.h"
+#import "PTInfoViewController.h"
 #import "globalDefine.h"
 
 // the full screen is 320 * 480
@@ -47,6 +48,7 @@
 - (enum PTGameResult) getGameResult;
 - (void) recordResult;
 - (void) turnToRankView;
+- (void) turnBack;
 
 @end
 
@@ -215,7 +217,8 @@
     enum PTGameResult gameResult = [self getGameResult];
     switch (gameResult) {
         case GOON:
-            [self.gridController newGameTurn];
+//            [self.gridController newGameTurn];
+            [self winGame];
             break;
         case WIN:
             [self winGame];
@@ -352,9 +355,36 @@
     [self.userManager insertScore:self.score];
 }
 
+/**
+ *	turn to info view and let user see the ranks
+ */
 - (void) turnToRankView
 {
-    
+    @try {
+        PTInfoViewController *rankView = [[PTInfoViewController alloc] init];
+        rankView.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                     initWithTitle:@"Back"
+                                                     style:UIBarButtonItemStyleDone
+                                                     target:self action:@selector(turnBack)];
+        
+        UINavigationController *turnToView = [[UINavigationController alloc]
+                                              initWithRootViewController:rankView];
+        turnToView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        
+        [self presentViewController:turnToView animated:YES completion:nil];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", [exception reason]);
+    }
+}
+
+/**
+ *	turn back to the game view
+ */
+- (void) turnBack
+{
+    self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -35,6 +35,15 @@
     return nil;
 }
 
+/**
+ *	the instance should be only created with this method. 
+ *  Otherwise, the mainGame will be nil, 
+ *  and no message can pass to main game instance, caused the game can not go on.
+ *
+ *	@param	mainGame	the instance represented the game view controller
+ *
+ *	@return	self
+ */
 - (id) initWithMainGame:(PTGameViewController *)mainGame
 {
     self = [super init];
@@ -47,6 +56,12 @@
     return self;
 }
 
+/**
+ *	then we will use this method to create gridView.
+ *  Don't forget to add the gridView as the subview of main game instance instead of self.
+ *
+ *	@param	frame	the size and coordination of gridView.
+ */
 - (void) initGridViewWithFrame:(CGRect)frame
 {
     self.gridView = [[PTGridView alloc] initWithFrame:frame];
