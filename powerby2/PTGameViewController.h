@@ -19,6 +19,7 @@
 - (void) lostGame;
 - (void) winGame;
 - (void) endGame;
+- (void) newGameLoop;
 
 - (void) addScore:(NSUInteger)score;
 

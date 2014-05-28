@@ -7,18 +7,14 @@
 //
 
 #import "PTGrid.h"
-#import "PTGridView.h"
-#import "PTGameViewController.h"
-
-#define MAXBINARYNUM 4096
+#import "PTGridViewController.h"
 
 @interface PTGrid ()
 
 @property (nonatomic) NSUInteger emptyCardsNum;
 @property (nonatomic) NSUInteger maxBinaryNum;
 @property (nonatomic) BOOL maxBinaryNumberGot;
-@property (nonatomic) PTGridView *delegate;
-@property (nonatomic) PTGameViewController *controller;
+@property (nonatomic) PTGridViewController *controller;
 
 - (void) helpForInit;
 - (void) updateMaxBinaryNum;
@@ -37,7 +33,6 @@
     self.maxBinaryNumberGot = NO;
     self.maxBinaryNum = 2;
     
-    self.delegate = nil;
     self.controller = nil;
 }
 
@@ -79,26 +74,11 @@
 }
 
 /**
- *	bind with a PTGridView and call its public method if need
- * 
- *  it is  a two-way binding
+ *	bind with a PTGridViewController and call its public method if need
  *
- *	@param	delegate	a PTGridView instance
+ *  @param  controller  a PTGridViewController instance which creates this PTGrid
  */
-- (void) bindWithDelegate:(PTGridView *)delegate
-{
-    self.delegate = delegate;
-    if (delegate != nil) {
-        [delegate bindWithDelegate:self];
-    }
-}
-
-/**
- *	bind with a PTGridView and call its public method if need
- *
- *  @param  controller  a PTGameViewController instance which creates this PTGrid
- */
-- (void) bindWithController:(PTGameViewController *)controller
+- (void) bindWithController:(PTGridViewController *)controller
 {
     self.controller = controller;
 }

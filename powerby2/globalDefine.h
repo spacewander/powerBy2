@@ -57,4 +57,6 @@ enum PTGameResult {
     GOON = 2
 };
 
+#define MAXBINARYNUM 4096
+
 #endif

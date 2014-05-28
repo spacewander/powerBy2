@@ -8,6 +8,7 @@
 
 #import "PTGridView.h"
 #import "PTCard.h"
+#import "PTGridViewController.h"
 #import "globalDefine.h"
 
 @interface PTGridView ()
@@ -17,7 +18,8 @@
 
 @property (readonly) int cardsNumber;
 @property (readonly) int cardsNumberPerLine;
-@property (nonatomic) PTGrid *delegate;
+
+@property (nonatomic) PTGridViewController *controller;
 
 - (void) fillWithCards:(CGRect)gridSize;
 - (int) cardsNumber;
@@ -34,7 +36,6 @@
                                                green:LAYOUT_COLOR_GREEN
                                                 blue:LAYOUT_COLOR_BLUE alpha:LAYOUT_COLOR_ALPHA];
         [self fillWithCards:frame];
-        self.delegate = nil;
     }
     return self;
 }
@@ -101,13 +102,13 @@
 //}
 
 /**
- *	bind with a PTGrid and call its public method if need
+ *	bind with a PTGridViewController and call its public method if need
  *
- *	@param	delegate	a PTGrid instance
+ *	@param	controller	a PTGridBViewController instance
  */
-- (void) bindWithDelegate:(PTGrid *)delegate
+- (void) bindWithController:(PTGridViewController *)controller
 {
-    self.delegate = delegate;
+    self.controller = controller;
 }
 
 #pragma mark - update
@@ -120,7 +121,7 @@
  */
 - (void) updateGrid
 {
-    if (self.delegate == nil) {
+    if (self.controller == nil) {
         return;
     }
     
@@ -129,7 +130,7 @@
         PTCard *card = self.cards[i];
         // change the cardValue of each card.
         // And then call update to update the cards according to their values
-        card.cardValue = self.delegate.values[i];
+        card.cardValue = [self.controller getSpecifiedValue:i];
     }
     for (int i = 0; i < cardsNumber; ++i) {
         [self.cards[i] update];
@@ -149,7 +150,7 @@
     }
     else {
         PTCard *card = self.cards[gridNumber];
-        card.cardValue = self.delegate.values[gridNumber];
+        card.cardValue = [self.controller getSpecifiedValue:gridNumber];
         [self.cards[gridNumber] update];
     }
 }

@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTGrid.h"
+
+@class PTGridViewController;
 
 /**
  *	the view of grid(the part which user can swipe and tranform cards on it)
@@ -19,6 +20,6 @@
 - (void) updateGridWithGridNumber:(NSUInteger)gridNumber;
 - (void) updateGrid;
 - (void) clear;
-- (void) bindWithDelegate:(PTGrid *)delegate;
+- (void) bindWithController:(PTGridViewController *)controller;
 
 @end

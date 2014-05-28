@@ -8,7 +8,7 @@
 #import "CXAlertView.h"
 
 #import "PTGameViewController.h"
-#import "PTGrid.h"
+#import "PTGridViewController.h"
 #import "PTGridView.h"
 #import "PTUserManager.h"
 #import "globalDefine.h"
@@ -36,16 +36,13 @@
 @property (nonatomic) NSUInteger highestScore;
 @property (nonatomic) NSUInteger score;
 
-@property (strong, nonatomic) PTGrid *gridModel;
-@property (strong, nonatomic) PTGridView *gridView;
+@property (strong, nonatomic) PTGridViewController *gridController;
 @property (strong, nonatomic) PTUserManager *userManager;
 
+- (void) initGrid;
 - (void) setDefaultBackgroundColor:(UIView *)view;
 - (void) setDefaultLayoutColor:(UIView *)view;
 - (void) setLabelStyle:(UILabel *)label;
-- (void) addRecognizers;
-- (void) handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer;
-- (void) newGameLoop;
 - (void) clear;
 - (enum PTGameResult) getGameResult;
 - (void) recordResult;
@@ -81,46 +78,11 @@
     [self setLabelStyle:self.highestScoreLabel];
     [self.view addSubview:self.highestScoreLabel];
     
-    self.gridView = [[PTGridView alloc] initWithFrame:
-                     CGRectMake(GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT)];
-    if (self.gridView == nil) {
-        NSLog(@"ERROR : can not init the view of grid!");
-        exit(1);
-    }
-    [self.view addSubview:self.gridView];
+    // the main game controller will init the gridView, gridModel and gridViewController
+    // then let them along to play with each other.
+    [self initGrid];
     
-    self.gridModel = [[PTGrid alloc] init];
-    // two-way binding
-    [self.gridModel bindWithDelegate:self.gridView];
-    // also bind it with its controller
-    [self.gridModel bindWithController:self];
-    
-    [self addRecognizers];
     [self startGame];
-}
-
-/**
- *	add recognizers for swipe actions
- */
-- (void) addRecognizers
-{
-    UISwipeGestureRecognizer *recognizer;
-    
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
-    [recognizer setDirection:UISwipeGestureRecognizerDirectionRight];
-    [[self view] addGestureRecognizer:recognizer];
-    
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
-    [recognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [[self view] addGestureRecognizer:recognizer];
-    
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
-    [recognizer setDirection:UISwipeGestureRecognizerDirectionUp];
-    [[self view] addGestureRecognizer:recognizer];
-    
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
-    [recognizer setDirection:UISwipeGestureRecognizerDirectionDown];
-    [[self view] addGestureRecognizer:recognizer];
 }
 
 - (void) loadView
@@ -134,6 +96,16 @@
     [self setDefaultBackgroundColor:self.view];
     
     self.userManager = [PTUserManager sharedInstance];
+}
+
+/**
+ * init grid part.
+ */
+- (void) initGrid
+{
+    self.gridController = [[PTGridViewController alloc] initWithMainGame:self];
+    [self.gridController initGridViewWithFrame:CGRectMake(GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT)];
+    [self.gridController bind];
 }
 
 - (void) setDefaultBackgroundColor:(UIView *)view
@@ -183,6 +155,7 @@
  */
 - (void) startNewGameFromOldOne
 {
+    [self recordResult];
     [self abortGame];
     [self startGame];
 }
@@ -192,10 +165,7 @@
  */
 - (void) startGame
 {
-    [self.gridModel setRandomValue];
-    [self.gridModel setRandomValue];
-    
-    [self.gridView updateGrid];
+    [self.gridController newGame];
 }
 
 /**
@@ -216,8 +186,7 @@
     self.highestScore = [self.userManager selectHighestScore];
     [self.highestScoreLabel setText:[NSString stringWithFormat:@"%u", self.highestScore]];
     
-    [self.gridModel clear];
-    [self.gridView clear];
+    [self.gridController clear];
 }
 
 - (void)didReceiveMemoryWarning
@@ -236,39 +205,6 @@
     return NO;
 }
 
-#pragma mark - gesture event
-
-/**
- *	handle different swipe directions
- *
- *	@param	recognizer	
- */
-- (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
-{
-    switch (recognizer.direction)
-    {
-        case UISwipeGestureRecognizerDirectionUp:
-            NSLog(@"up");
-            [self.gridModel swipeUp];
-            break;
-        case UISwipeGestureRecognizerDirectionDown:
-            NSLog(@"down");
-            [self.gridModel swipeDown];
-            break;
-        case UISwipeGestureRecognizerDirectionLeft:
-            NSLog(@"left");
-            [self.gridModel swipeLeft];
-            break;
-        case UISwipeGestureRecognizerDirectionRight:
-            NSLog(@"right");
-            [self.gridModel swipeRight];
-        default:
-            break;
-    }
-    [self.gridView updateGrid];
-    [self newGameLoop];
-}
-
 #pragma mark - new game loop
 
 /**
@@ -279,8 +215,7 @@
     enum PTGameResult gameResult = [self getGameResult];
     switch (gameResult) {
         case GOON:
-            [self.gridModel setRandomValue];
-            [self.gridView updateGrid];
+            [self.gridController newGameTurn];
             break;
         case WIN:
             [self winGame];
@@ -304,7 +239,7 @@
  */
 - (enum PTGameResult) getGameResult
 {
-    return [self.gridModel reportGameResult];
+    return [self.gridController reportGameResult];
 }
 
 /**
