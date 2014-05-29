@@ -26,6 +26,7 @@
 - (void) newGameTurn;
 - (enum PTGameResult) reportGameResult;
 - (void) addScore:(NSUInteger)score;
+- (void) cardNeedUpdate:(NSUInteger)index;
 - (NSMutableArray *) getValues;
 - (NSNumber *) getSpecifiedValue:(NSUInteger)index;
 

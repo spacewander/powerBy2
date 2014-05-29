@@ -43,8 +43,13 @@ enum ColorCombination {
 @interface PTCard ()
 
 @property (nonatomic) NSUInteger previousValue;
+@property (nonatomic) enum ColorCombination color;
 
-- (void) setColors:(enum ColorCombination)colors;
+- (void) setupColor;
+- (UIColor *)convertColorCombinationToUIColor:(enum ColorCombination)color;
+- (void) startAnimation;
+- (void) fadeOutThenIn;
+- (void) fadeIn;
 @end
 
 @implementation PTCard
@@ -98,120 +103,204 @@ enum ColorCombination {
 
 /**
  *	set different background according to the color combination
- *
- *	@param	colors	color combination defined by the value of the card
  */
-- (void) setColors:(enum ColorCombination)colors
+- (void) setupColor
 {
-    switch (colors) {
+    self.backgroundColor = [self convertColorCombinationToUIColor:self.color];
+}
+
+/**
+ *	convert ColorCombination type to the reponsitive UIColor
+ *
+ *	@param	color	ColorCombination type, the color combination which should be shown up
+ *
+ *	@return	reponsitive UIColor
+ */
+- (UIColor *) convertColorCombinationToUIColor:(enum ColorCombination)color
+{
+    switch (self.color) {
         case DefaultColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:DEFAULT_RED green:DEFAULT_GREEN
+            return [UIColor colorWithRed:DEFAULT_RED green:DEFAULT_GREEN
                                                     blue:DEFAULT_BLUE alpha:DEFAULT_ALPHA ];
-            break;
         case FirstColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.93 green:0.89
+            return [UIColor colorWithRed:0.93 green:0.89
                                                     blue:0.85 alpha:1.0];
-            break;
         case SecondColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.93 green:0.87
+            return [UIColor colorWithRed:0.93 green:0.87
                                                     blue:0.78125 alpha:1.0];
-            break;
         case ThirdColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.945 green:0.69
+            return [UIColor colorWithRed:0.945 green:0.69
                                                     blue:0.47 alpha:1.0];
-            break;
         case FourthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.96 green:0.58
+            return [UIColor colorWithRed:0.96 green:0.58
                                                     blue:0.385 alpha:1.0];
-            break;
         case FifthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.96 green:0.48
+            return [UIColor colorWithRed:0.96 green:0.48
                                                     blue:0.37 alpha:1.0];
-            break;
         case SixthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.96 green:0.37
+            return [UIColor colorWithRed:0.96 green:0.37
                                                     blue:0.23 alpha:1.0];
-            break;
         case SeventhColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.925 green:0.80
+            return [UIColor colorWithRed:0.925 green:0.80
                                                     blue:0.445 alpha:1.0];
-            break;
         case EighthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.925 green:0.80
+            return [UIColor colorWithRed:0.925 green:0.80
                                                     blue:0.38 alpha:1.0];
-            break;
         case NinthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:0.925 green:0.78125
+            return [UIColor colorWithRed:0.925 green:0.78125
                                                     blue:0.3 alpha:1.0];
-            break;
         case TenthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:1 green:0.875
+            return [UIColor colorWithRed:1 green:0.875
                                                     blue:0.49 alpha:1.0];
-            break;
         case EleventhColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:1 green:0.89
+            return [UIColor colorWithRed:1 green:0.89
                                                     blue:0.54 alpha:1.0];
-            break;
         case TwelfthColorCombination:
-            self.backgroundColor = [UIColor colorWithRed:1 green:0.9
+            return [UIColor colorWithRed:1 green:0.9
                                                     blue:0.6 alpha:1.0];
-            break;
         default:
             break;
     }
+    // something wrong happens
+    return [UIColor colorWithRed:DEFAULT_RED green:DEFAULT_GREEN
+                            blue:DEFAULT_BLUE alpha:DEFAULT_ALPHA];
 }
 
 /**
  *	update the text and style according to the value
  */
-- (void) update
+- (void) updateWithAnimated:(BOOL)animated
 {
     int textValue = [self.cardValue intValue];
     
     self.text =  (textValue == 0) ? @"" : [NSString stringWithFormat:@"%d", textValue];
-    enum ColorCombination colors = DefaultColorCombination;
     switch (textValue) {
         case 0:
+            self.color = DefaultColorCombination;
             break;  // default value of colors is DefaultColorCombination
         case 2:
-            colors = FirstColorCombination;
+            self.color = FirstColorCombination;
             break;
         case 4:
-            colors = SecondColorCombination;
+            self.color = SecondColorCombination;
             break;
         case 8:
-            colors = ThirdColorCombination;
+            self.color = ThirdColorCombination;
             break;
         case 16:
-            colors = FourthColorCombination;
+            self.color = FourthColorCombination;
             break;
         case 32:
-            colors = FifthColorCombination;
+            self.color = FifthColorCombination;
             break;
         case 64:
-            colors = SixthColorCombination;
+            self.color = SixthColorCombination;
             break;
         case 128:
-            colors = SeventhColorCombination;
+            self.color = SeventhColorCombination;
             break;
         case 256:
-            colors = EighthColorCombination;
+            self.color = EighthColorCombination;
             break;
         case 512:
-            colors = NinthColorCombination;
+            self.color = NinthColorCombination;
             break;
         case 1024:
-            colors = TenthColorCombination;
+            self.color = TenthColorCombination;
             break;
         case 2048:
-            colors = EleventhColorCombination;
+            self.color = EleventhColorCombination;
             break;
             
         
         default: // value > 2048
-            colors = TwelfthColorCombination;
+            self.color = TwelfthColorCombination;
             break;
     }
-    [self setColors:colors];
+    
+    if (animated == YES) {
+        [self startAnimation];
+    } else {
+        [self setupColor];
+    }
+    self.previousValue = [self.cardValue intValue];
+}
+
+/**
+ *	start specified animation according to the previous value of card 
+ *  and the current value of it.
+ */
+- (void) startAnimation
+{
+    // fade in if there is no visible card before
+    if (self.previousValue == 0 &&
+            ([self.cardValue intValue] == 2 || [self.cardValue intValue] == 4)) {
+        [self fadeIn];
+    }
+    // fade out then fade in. Called when the card is squeezed
+    else if (self.previousValue != 0 && self.previousValue * 2 == [self.cardValue intValue]) {
+        [self fadeOutThenIn];
+    }
+    // simply setup the background color
+    else {
+        [self setupColor];
+    }
+}
+
+#pragma mark - animations
+
+/**
+ *	fade in new background color from background color
+ */
+- (void) fadeIn
+{
+    NSLog(@"fadeIn");
+    __block BOOL done = NO;
+    [self setupColor];
+    [self setAlpha:0.6];
+    self.transform = CGAffineTransformMakeScale(0, 0);
+    [UIView animateWithDuration:0.1 animations:^{
+        [self setAlpha:1.0];
+        self.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        done = YES;
+    }];
+    // wait for animation to finish
+    while (done == NO) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    }
+}
+
+/**
+ *	fade out current background color and fade in a new one
+ */
+- (void) fadeOutThenIn
+{
+        NSLog(@"fadeOut");
+    __block BOOL done = NO;
+
+    [UIView animateWithDuration:0.03 animations:^{
+        [self setAlpha:0.8];
+        self.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    } completion:^(BOOL finished) {
+        done = YES;
+    }];
+    // wait for animation to finish
+    while (done == NO) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.005]];
+    }
+    
+    [self setupColor];
+    [self setAlpha:0.8];
+    [UIView animateWithDuration:0.03 animations:^{
+        [self setAlpha:1.0];
+        self.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        done = NO;
+    }];
+    // wait for animation to finish
+    while (done == YES) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.005]];
+    }
 }
 @end

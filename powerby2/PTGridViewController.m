@@ -199,6 +199,16 @@
     [self.mainGame addScore:score];
 }
 
+/**
+ *	ask for updating a PTCard
+ *
+ *	@param	index	the index of PTCard
+ */
+- (void) cardNeedUpdate:(NSUInteger)index
+{
+    [self.gridView updateGridWithGridNumber:index];
+}
+
 #pragma mark - called by view
 
 - (NSMutableArray *) getValues

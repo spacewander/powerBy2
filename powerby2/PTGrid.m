@@ -83,6 +83,7 @@
     self.controller = controller;
 }
 
+#pragma mark - action
 /**
  *	select two cards(which is with 0 value) with initial value(2 or 4).
  *  And return the card whose value has been set. 
@@ -139,6 +140,8 @@
     else {
         NSLog(@"the controllor of PTGrid should not be nil!");
     }
+    
+    [self.controller cardNeedUpdate:cardId];
 }
 
 /**

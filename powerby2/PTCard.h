@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) NSNumber *cardValue;
 
-- (void) update;
+- (void) updateWithAnimated:(BOOL)animated;
 - (void) setDefaultStyle;
 
 @end

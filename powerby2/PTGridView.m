@@ -133,7 +133,7 @@
         card.cardValue = [self.controller getSpecifiedValue:i];
     }
     for (int i = 0; i < cardsNumber; ++i) {
-        [self.cards[i] update];
+        [self.cards[i] updateWithAnimated:NO];
     }
 }
 
@@ -151,7 +151,7 @@
     else {
         PTCard *card = self.cards[gridNumber];
         card.cardValue = [self.controller getSpecifiedValue:gridNumber];
-        [self.cards[gridNumber] update];
+        [self.cards[gridNumber] updateWithAnimated:YES];
     }
 }
 
