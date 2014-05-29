@@ -42,8 +42,9 @@ enum ColorCombination {
 
 @interface PTCard ()
 
-- (void) setColors:(enum ColorCombination)colors;
+@property (nonatomic) NSUInteger previousValue;
 
+- (void) setColors:(enum ColorCombination)colors;
 @end
 
 @implementation PTCard
@@ -59,8 +60,9 @@ enum ColorCombination {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaultStyle];
+        [self setText:@""];
+        self.previousValue = 0;
         self.cardValue = [NSNumber numberWithInt:0];
-        [self update];
     }
     return self;
 }

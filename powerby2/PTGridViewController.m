@@ -152,10 +152,11 @@
  */
 - (void) newGame
 {
-    [self.gridModel setRandomValue];
-    [self.gridModel setRandomValue];
+    NSUInteger index = [self.gridModel setRandomValue];
+    [self.gridView updateGridWithGridNumber:index];
     
-    [self.gridView updateGrid];
+    index = [self.gridModel setRandomValue];
+    [self.gridView updateGridWithGridNumber:index];
 }
 
 /**
@@ -172,8 +173,8 @@
  */
 - (void) newGameTurn
 {
-    [self.gridModel setRandomValue];
-    [self.gridView updateGrid];
+    NSUInteger index = [self.gridModel setRandomValue];
+    [self.gridView updateGridWithGridNumber:index];
 }
 
 /**

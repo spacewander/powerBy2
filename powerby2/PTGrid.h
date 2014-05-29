@@ -21,7 +21,7 @@
 @property (strong) NSMutableArray* values;
 
 - (id) initWithGrid:(NSMutableArray *)gridArray;
-- (void) setRandomValue;
+- (NSUInteger) setRandomValue;
 - (void) clear;
 - (enum PTGameResult) reportGameResult;
 - (void) bindWithController:(PTGridViewController *)controller;

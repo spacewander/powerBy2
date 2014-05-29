@@ -84,32 +84,39 @@
 }
 
 /**
- *	select two cards(which is with 0 value) with initial value(2 or 4)
+ *	select two cards(which is with 0 value) with initial value(2 or 4).
+ *  And return the card whose value has been set. 
+ *  The return value will be used to update responsitive PTCard.
  */
-- (void) setRandomValue
+- (NSUInteger) setRandomValue
 {
     srandom((unsigned)time(0));
     
-    int selectFirstCard = random() % CARDS_NUMBER;
+    if (self.emptyCardsNum == 0) {
+        return 0; // return random value is ok. The return value won't be checked currently
+    }
+    
+    int selectCard = random() % CARDS_NUMBER;
     // before called this method to set random value, we should check if there is any empty space
-    while (self.values[selectFirstCard] != [NSNumber numberWithInt:0] ) {
-        selectFirstCard = random() % CARDS_NUMBER;
+    while (self.values[selectCard] != [NSNumber numberWithInt:0] ) {
+        selectCard = random() % CARDS_NUMBER;
     }
     
     // there will be two in each two time in three, and will be four one third
-    int firstValue = 2;
+    int value = 2;
     if (random() % 3 == 0) {
-        firstValue = 4;
+        value = 4;
         // the default value of maxBinaryNum is 2. So update it to 4.
         if (self.maxBinaryNum < 4) {
             [self updateMaxBinaryNum];
         }
     }
     
-    [self.values setObject:[NSNumber numberWithInt:firstValue]
-        atIndexedSubscript:(NSUInteger)selectFirstCard];
+    [self.values setObject:[NSNumber numberWithInt:value]
+        atIndexedSubscript:(NSUInteger)selectCard];
     
     --self.emptyCardsNum;
+    return selectCard;
 }
 
 /**
@@ -161,17 +168,24 @@
                     // clean original value
                     self.values[step + j] = [NSNumber numberWithInt:0];
                 }
-                // squeeze the card
-                // make sure that the k should be compared with the one in above line
-                if (k != 0 &&
-                    [self.values[step + k] compare:self.values[step + k - 1]] ==  NSOrderedSame) {
-                    self.values[step + k] = [NSNumber numberWithInt:0];
-                    [self squeeze:(step + k - 1)];
-                } // end if squeeze
-                
                 ++k;
                 } // end not equal to 0
         }// end for cols
+        
+        for (int k = 0; k < CARDS_PER_LINE; ++k) {
+            if (self.values[step + k] != [NSNumber numberWithInt:0]) {
+                // squeeze the card
+                // make sure that the k should be compared with the one in below line
+                if (k != 0 &&
+                    [self.values[step + k] compare:self.values[step + k - 1]] ==  NSOrderedSame) {
+                    [self squeeze:(step + k - 1)];
+                    for (int m = k; m < CARDS_PER_LINE - 1; ++m) {
+                        [self.values setObject:self.values[step + m + 1] atIndexedSubscript:(step + m)];
+                    }
+                } // end if squeeze
+            }// end not equal to 0
+        }
+        
     }// end for rows
 }
 
@@ -189,17 +203,25 @@
                     // clean original value
                     self.values[step + j] = [NSNumber numberWithInt:0];
                 }
-                // squeeze the card
-                // make sure that the k should be compared with the one in below line
-                if (k != (CARDS_PER_LINE - 1) &&
-                    [self.values[step + k] compare:self.values[step + k + 1]] ==  NSOrderedSame) {
-                    self.values[step + k] = [NSNumber numberWithInt:0];
-                    [self squeeze:(step + k + 1)];
-                } // end if squeeze
                 
                 --k;
             } // end not equal to 0
         }// end for cols
+        
+        for (int k = CARDS_PER_LINE - 1; k >= 0; --k) {
+            if (self.values[step + k] != [NSNumber numberWithInt:0]) {
+                // squeeze the card
+                // make sure that the k should be compared with the one in below line
+                if (k != (CARDS_PER_LINE - 1) &&
+                    [self.values[step + k] compare:self.values[step + k + 1]] ==  NSOrderedSame) {
+                    [self squeeze:(step + k + 1)];
+                    for (int m = k; m > 0; --m) {
+                        [self.values setObject:self.values[step + m - 1] atIndexedSubscript:(step + m)];
+                    }
+                } // end if squeeze
+            }// end not equal to 0
+        }
+        
     }// end for rows
 }
 
@@ -216,19 +238,27 @@
                     // clean original value
                     self.values[i + j * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
                 }
-                // squeeze the card
-                // make sure that the k should be compared with the one in above line
-                if (k != 0 &&
-                    [self.values[i + k * CARDS_PER_LINE]
-                        compare:self.values[i + (k - 1) * CARDS_PER_LINE]] == NSOrderedSame) {
-                    
-                    self.values[i + k * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
-                    [self squeeze:(i + (k - 1) * CARDS_PER_LINE)];
-                } // end if squeeze
-                
                 ++k;
             } // end not equal to 0
         }// end for rows
+        
+        for (int k = 0; k < CARDS_PER_LINE; ++k) {
+            if (self.values[i + k * CARDS_PER_LINE] != [NSNumber numberWithInt:0]) {
+                // squeeze the card
+                // make sure that the k should be compared with the one in below line
+                if (k != 0 &&
+                    [self.values[i + k * CARDS_PER_LINE]
+                     compare:self.values[i + (k - 1) * CARDS_PER_LINE]] ==  NSOrderedSame) {
+                        
+                        [self squeeze:(i + (k - 1) * CARDS_PER_LINE)];
+                        for (int m = k; m < CARDS_PER_LINE - 1; ++m) {
+                            [self.values setObject:self.values[i + (m + 1) * CARDS_PER_LINE]
+                                atIndexedSubscript:(i + m * CARDS_PER_LINE)];
+                        }
+                    } // end if squeeze
+            }// end not equal to 0
+        }// end for rows
+        
     }// end for cols
 }
 
@@ -245,19 +275,27 @@
                     // clean original value
                     self.values[i + j * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
                 }
-                // squeeze the card
-                // make sure that the k should be compared with the one in above line
-                if (k != (CARDS_PER_LINE - 1) &&
-                    [self.values[i + k * CARDS_PER_LINE]
-                      compare:self.values[i + (k + 1) * CARDS_PER_LINE]] ==  NSOrderedSame) {
-                    
-                    self.values[i + k * CARDS_PER_LINE] = [NSNumber numberWithInt:0];
-                    [self squeeze:(i + (k + 1) * CARDS_PER_LINE)];
-                } // end if squeeze
-                
                 --k;
             } // end not equal to 0
         }// end for rows
+        
+        for (int k = CARDS_PER_LINE - 1; k >= 0; --k) {
+            if (self.values[i + k * CARDS_PER_LINE] != [NSNumber numberWithInt:0]) {
+                // squeeze the card
+                // make sure that the k should be compared with the one in below line
+                if (k != (CARDS_PER_LINE - 1) &&
+                    [self.values[i + k * CARDS_PER_LINE]
+                            compare:self.values[i + (k + 1) * CARDS_PER_LINE]] ==  NSOrderedSame) {
+                        
+                    [self squeeze:(i + (k + 1) * CARDS_PER_LINE)];
+                    for (int m = k; m > 0; --m) {
+                        [self.values setObject:self.values[i + (m - 1) * CARDS_PER_LINE]
+                                        atIndexedSubscript:(i + m * CARDS_PER_LINE)];
+                    }
+                } // end if squeeze
+            }// end not equal to 0
+        }// end for rows
+        
     }// end for cols
 }
 

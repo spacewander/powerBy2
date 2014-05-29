@@ -217,8 +217,7 @@
     enum PTGameResult gameResult = [self getGameResult];
     switch (gameResult) {
         case GOON:
-//            [self.gridController newGameTurn];
-            [self winGame];
+            [self.gridController newGameTurn];
             break;
         case WIN:
             [self winGame];
